@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vehicle Details | Traveller Booking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="Vehicledetails.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light animated-section" data-animate="fadeInDown">
+    <div class="container-fluid d-flex justify-content-between align-items-center px-4">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="Logo/Logo.png" alt="Logo" class="logo-img" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link underline-on-hover animated-section" data-animate="fadeInLeft" href="Home.html">
+            <img src="Logo/home.png" alt="Home Icon" style="width:22px; height:22px; margin-right:6px;">Home</a></li>
+          <li class="nav-item"><a class="nav-link underline-on-hover animated-section" data-animate="fadeInRight" href="Login.html">
+            <img src="Logo/login.png" alt="Home Icon" style="width:22px; height:22px; margin-right:6px;">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Search and Date Filter Bar -->
+  <div class="container-fluid py-3 filter-bar animated-section" data-animate="fadeInDown">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-md-4 mb-2 mb-md-0">
+        <input type="text" id="searchInput" class="form-control"
+          placeholder="Search for cars or bikes"
+          style="background: #fff url('Logo/Search.jpg') no-repeat 96% center; background-size: 20px 20px; padding-right: 32px;">
+      </div>
+      <div class="col-md-3">
+        <input type="date" id="bookingDate" class="form-control date-bar-input" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar + Vehicles -->
+  <div class="container-fluid mt-2">
+    <div class="row">
+      <!-- Sidebar -->
+      <aside class="col-md-3 mb-4">
+        <div class="filter-section mb-3 animated-section" data-animate="fadeInLeft">
+          <div class="filter-title" style="display: flex; align-items: center;">
+            <img src="Logo/Filters.jpg" alt="Filter" style="width:20px; height:20px; margin-right:8px;">
+            Filters
+          </div>
+          <label class="filter-label mt-2">Vehicle Type</label>
+          <select id="typeSelect" class="form-select mb-2">
+            <option value="">All</option>
+            <option value="Car">Car</option>
+            <option value="Bike">Bike</option>
+          </select>
+          <label class="filter-label">Fuel Type</label>
+          <select id="fuelSelect" class="form-select mb-2">
+            <option value="">All</option>
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Electric">Electric</option>
+          </select>
+          <label class="filter-label">Seats</label>
+          <select id="seatSelect" class="form-select mb-2">
+            <option value="">Any</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <label class="filter-label">Minimum Rating</label>
+          <select id="ratingSelect" class="form-select mb-2">
+            <option value="">Any</option>
+            <option value="4">4+</option>
+            <option value="4.5">4.5+</option>
+            <option value="5">5</option>
+          </select>
+          <label class="filter-label">Price (₹)</label>
+          <input type="range" min="500" max="5000" step="100" id="priceRange" class="form-range mb-2">
+          <div><span id="priceValue">₹2500</span></div>
+        </div>
+      </aside>
+      <!-- Main Vehicle Display -->
+      <main class="col-md-9">
+        <div class="vehicle-container">
+          <div id="vehicleContainer" class="row gy-4">
+            <!-- JS-inserted vehicles go here; add animation classes to JS output -->
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Traveller Booking. All rights reserved.
+  </footer>
+
+  <script src="Vehicledetails.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Entrance animations for .animated-section, supporting JS-injected vehicle cards
+    document.addEventListener("DOMContentLoaded", function () {
+      var elems = document.querySelectorAll('.animated-section');
+      var observer = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("shown");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.13 });
+      elems.forEach(function (el) { observer.observe(el); });
+
+      // For use in Vehicledetails.js for JS-inserted cards:
+      window.observeAnimatedSections = function () {
+        document.querySelectorAll(".animated-section:not(.shown)").forEach(function (el) {
+          observer.observe(el);
+        });
+      };
+
+      // Live price value update for slider
+      const priceRange = document.getElementById('priceRange');
+      const priceValue = document.getElementById('priceValue');
+      if (priceRange && priceValue) {
+        priceRange.addEventListener('input', function() {
+          priceValue.textContent = "₹" + priceRange.value;
+        });
+      }
+    });
+  </script>
+</body>
+</html>

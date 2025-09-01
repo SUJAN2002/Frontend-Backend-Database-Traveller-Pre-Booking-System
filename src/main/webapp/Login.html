@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Traveller Login Page</title>
+  <link rel="stylesheet" href="Login.css" />
+  <script src="https://kit.fontawesome.com/9fcb73aee8.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <div class="container" id="container">
+
+    <!-- SIGN UP FORM -->
+    <div class="form-container sign-up">
+
+      <form onsubmit="handleSignin(event)"  autocomplete="off">
+
+        <h1>Create Account</h1>
+        <div class="social-icons">
+          <a href="https://accounts.google.com/signin" class="icon" target="_blank"><i
+              class="fa-brands fa-google"></i></a>
+          <a href="https://www.facebook.com/login" class="icon" target="_blank"><i
+              class="fa-brands fa-facebook"></i></a>
+          <a href="https://appleid.apple.com/auth/authorize" class="icon" target="_blank"><i
+              class="fa-brands fa-apple"></i></a>
+        </div>
+        <span>or use your email for registration</span>
+        <input type="text"  placeholder="Name" name="user_name" id="signupName" required />
+        <input type="email" placeholder="Email" name="user_email" id="signupEmail" required />
+        <input type="password" placeholder="Password" name="user_password" id="signupPassword" required />
+
+        <input type="hidden" name="message" id="welcomeMessage" />
+        <input type="hidden" name="to_name" value="New User" />
+        <button type="submit" class="gradient-button animated-section" data-animate="pulse">Sign Up</button>
+      </form>
+    </div>
+
+    <!-- SIGN IN FORM -->
+    <div class="form-container sign-in">
+      <form onsubmit="redirectToVehicledetails(event)">
+        <h1>Sign In</h1>
+        <div class="social-icons">
+          <a href="https://accounts.google.com/signin" class="icon" target="_blank"><i
+              class="fa-brands fa-google"></i></a>
+          <a href="https://www.facebook.com/login" class="icon" target="_blank"><i
+              class="fa-brands fa-facebook"></i></a>
+          <a href="https://appleid.apple.com/auth/authorize" class="icon" target="_blank"><i
+              class="fa-brands fa-apple"></i></a>
+        </div>
+        <span>or use your email password</span>
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <a href="#">Forget your password?</a>
+      <button type="submit" class="gradient-button animated-section" data-animate="pulse">Sign In</button>
+      </form>
+    </div>
+
+    <!-- TOGGLE PANEL -->
+    <div class="toggle-container">
+      <div class="toggle">
+        <div class="toggle-panel toggle-left">
+          <h1>Welcome Back!</h1>
+          <p>To keep connected with us please login with your personal info</p>
+          <button class="hidden" id="login">Sign In</button>
+        </div>
+        <div class="toggle-panel toggle-right">
+          <h1>Hello, Friend!</h1>
+          <p>Register with your personal details to use all of site features</p>
+          <button class="hidden" id="register">Sign Up</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JS for toggle effect (your original Login.js) -->
+   <!-- Load EmailJS SDK -->
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+<!-- Then your own script -->
+<script src="Login.js"></script>
+
+<script>
+  // Make .animated-section animate when visible (like in About page)
+  document.addEventListener("DOMContentLoaded", function() {
+    const elems = document.querySelectorAll('.animated-section');
+    const observer = new IntersectionObserver(function(entries, obs) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("shown");
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    elems.forEach(function(el) { observer.observe(el); });
+  });
+</script>
+
+</body>
+
+</html>
